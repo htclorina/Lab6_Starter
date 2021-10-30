@@ -25,10 +25,9 @@ async function init() {
     console.log('Recipe fetch unsuccessful');
     return;
   };
-  alert(recipeData[recipes[0]]);
-  alert(recipeData[recipes[0]]);
-  alert(recipeData[recipes[1]]);
-  alert(recipeData[recipes[2]]);
+  setTimeout(() => {alert(recipeData[recipes[0]]);}, 2000);
+  setTimeout(() => {alert(recipeData[recipes[1]]);}, 2000);
+  setTimeout(() => {alert(recipeData[recipes[2]]);}, 2000);
   // Add the first three recipe cards to the page
   createRecipeCards();
   // Make the "Show more" button functional
