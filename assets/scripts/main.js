@@ -11,7 +11,8 @@ const recipes = [
 // Once all of the recipes that were specified above have been fetched, their
 // data will be added to this object below. You may use whatever you like for the
 // keys as long as it's unique, one suggestion might but the URL itself
-const recipeData = {}
+const recipeData = {
+}
 
 window.addEventListener('DOMContentLoaded', init);
 
@@ -24,6 +25,10 @@ async function init() {
     console.log('Recipe fetch unsuccessful');
     return;
   };
+  alert(recipeData[recipes[0]]);
+  alert(recipeData[recipes[0]]);
+  alert(recipeData[recipes[1]]);
+  alert(recipeData[recipes[2]]);
   // Add the first three recipe cards to the page
   createRecipeCards();
   // Make the "Show more" button functional
@@ -43,6 +48,21 @@ async function fetchRecipes() {
     // in the recipes folder and fetch them from there. You'll need to add their paths to the recipes array.
 
     // Part 1 Expose - TODO
+    var jsonrequests = [];
+    for(let i=0;i<4;i++)
+    {
+      var jsonrequest = new XMLHttpRequest();
+      jsonrequest.onreadystatechange = function() {
+        if((this.readyState == 4) && (this.status == 200))
+        {
+          recipeData[this.responseURL] = this.responseText;
+        }
+      };
+      jsonrequest.open('GET', recipes[i]);
+      jsonrequest.send();
+      jsonrequests.push(jsonrequest);
+    }
+    resolve(true);
   });
 }
 
