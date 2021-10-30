@@ -48,7 +48,7 @@ async function fetchRecipes() {
 
     // Part 1 Expose - TODO
     var jsonrequests = [];
-    for(let i=0;i<4;i++)
+    for(let i=0;i<recipes.length;i++)
     {
       var jsonrequest = new XMLHttpRequest();
       jsonrequest.onreadystatechange = function() {
@@ -57,7 +57,7 @@ async function fetchRecipes() {
           recipeData[this.responseURL] = this.responseText;
         }
       };
-      jsonrequest.open('GET', recipes[i]);
+      jsonrequest.open('GET', recipes[i], true);
       jsonrequest.send();
       jsonrequests.push(jsonrequest);
     }
