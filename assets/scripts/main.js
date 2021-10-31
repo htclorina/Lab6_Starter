@@ -20,14 +20,12 @@ window.addEventListener('DOMContentLoaded', init);
 async function init() {
   // fetch the recipes and wait for them to load
   let fetchSuccessful = await fetchRecipes();
+  alert("After await");
   // if they didn't successfully load, quit the function
   if (!fetchSuccessful) {
     console.log('Recipe fetch unsuccessful');
     return;
   };
-  setTimeout(() => {alert(recipeData[recipes[0]]);}, 2000);
-  setTimeout(() => {alert(recipeData[recipes[1]]);}, 2000);
-  setTimeout(() => {alert(recipeData[recipes[2]]);}, 2000);
   // Add the first three recipe cards to the page
   createRecipeCards();
   // Make the "Show more" button functional
@@ -61,7 +59,7 @@ async function fetchRecipes() {
       jsonrequest.send();
       jsonrequests.push(jsonrequest);
     }
-    resolve(true);
+    setTimeout(() => {resolve(true);}, 500);
   });
 }
 
