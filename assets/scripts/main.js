@@ -5,19 +5,26 @@
 const recipes = [
   'https://introweb.tech/assets/json/ghostCookies.json',
   'https://introweb.tech/assets/json/birthdayCake.json',
-  'https://introweb.tech/assets/json/chocolateChip.json'
+  'https://introweb.tech/assets/json/chocolateChip.json',
+  'assets/recipes/curry.json',
+  'assets/recipes/pumpkin.json',
+  'assets/recipes/soup.json'
 ];
 
 // Once all of the recipes that were specified above have been fetched, their
 // data will be added to this object below. You may use whatever you like for the
 // keys as long as it's unique, one suggestion might but the URL itself
-const recipeData = {}
+const recipeData = {
+}
 
 window.addEventListener('DOMContentLoaded', init);
-let recipe = document.querySelector('main');
-let e = document.createElement("recipe-card");
+
 // This is the first function to be called, so when you are tracing your code start here.
 async function init() {
+  for(let i=3;i<recipes.length;i++)
+  {
+    recipes[i] = document.URL + recipes[i];
+  }
   // fetch the recipes and wait for them to load
   let fetchSuccessful = await fetchRecipes();
   // if they didn't successfully load, quit the function
@@ -25,15 +32,8 @@ async function init() {
     console.log('Recipe fetch unsuccessful');
     return;
   };
-  //console.log(recipeData);
-  //setTimeout(() => {console.log(recipeData);}, 2000);
-  //console.log(recipeData[0]);
-  //setTimeout(() => {alert(recipeData[recipes[0]]);}, 2000);
-  //setTimeout(() => {alert(recipeData[recipes[1]]);}, 2000);
-  //setTimeout(() => {alert(recipeData[recipes[2]]);}, 2000);
   // Add the first three recipe cards to the page
-  //createRecipeCards();
-  setTimeout(() => {createRecipeCards();}, 2000);
+  createRecipeCards();
   // Make the "Show more" button functional
   bindShowMore();
 }
@@ -58,14 +58,14 @@ async function fetchRecipes() {
       jsonrequest.onreadystatechange = function() {
         if((this.readyState == 4) && (this.status == 200))
         {
-          recipeData[this.responseURL] = this.responseText;
+          recipeData[this.responseURL] = JSON.parse(this.responseText);
         }
       };
       jsonrequest.open('GET', recipes[i], true);
       jsonrequest.send();
       jsonrequests.push(jsonrequest);
     }
-    resolve(true);
+    setTimeout(() => {resolve(true);}, 500);
   });
 }
 
@@ -77,15 +77,23 @@ function createRecipeCards() {
   // show any others you've added when the user clicks on the "Show more" button.
 
   // Part 1 Expose - TODO
-  //let recipe = document.querySelector('main');
-  //let e = document.createElement("recipe-card");
   let recipe = document.querySelector('main');
-  for(const rc in recipeData)
+  for(let i=0; i<recipes.length; i++)
   {
     let e = document.createElement("recipe-card");
-    e.data = rc;
+    if(i<3)
+    {
+      e.classList.add("expose_recipe");
+    }
+    else
+    {
+      e.classList.add("explore_recipe");
+      e.style["display"] = "none";
+    }
+    e.data = recipeData[recipes[i]];
     recipe.append(e);
   }
+  console.log(recipe);
 }
 
 function bindShowMore() {
