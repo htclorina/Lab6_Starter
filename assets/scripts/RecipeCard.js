@@ -157,7 +157,6 @@ class RecipeCard extends HTMLElement {
   }
 }
 
-
 /*********************************************************************/
 /***                       Helper Functions:                       ***/
 /***          Below are some functions I used when making          ***/
