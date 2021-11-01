@@ -14,7 +14,8 @@ const recipes = [
 const recipeData = {}
 
 window.addEventListener('DOMContentLoaded', init);
-
+let recipe = document.querySelector('main');
+let e = document.createElement("recipe-card");
 // This is the first function to be called, so when you are tracing your code start here.
 async function init() {
   // fetch the recipes and wait for them to load
@@ -24,8 +25,15 @@ async function init() {
     console.log('Recipe fetch unsuccessful');
     return;
   };
+  //console.log(recipeData);
+  //setTimeout(() => {console.log(recipeData);}, 2000);
+  //console.log(recipeData[0]);
+  //setTimeout(() => {alert(recipeData[recipes[0]]);}, 2000);
+  //setTimeout(() => {alert(recipeData[recipes[1]]);}, 2000);
+  //setTimeout(() => {alert(recipeData[recipes[2]]);}, 2000);
   // Add the first three recipe cards to the page
-  createRecipeCards();
+  //createRecipeCards();
+  setTimeout(() => {createRecipeCards();}, 2000);
   // Make the "Show more" button functional
   bindShowMore();
 }
@@ -69,12 +77,15 @@ function createRecipeCards() {
   // show any others you've added when the user clicks on the "Show more" button.
 
   // Part 1 Expose - TODO
+  //let recipe = document.querySelector('main');
+  //let e = document.createElement("recipe-card");
   let recipe = document.querySelector('main');
   for(const rc in recipeData)
   {
     let e = document.createElement("recipe-card");
     e.data = rc;
     recipe.append(e);
+  }
 }
 
 function bindShowMore() {
