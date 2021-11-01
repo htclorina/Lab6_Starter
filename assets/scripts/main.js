@@ -5,7 +5,10 @@
 const recipes = [
   'https://introweb.tech/assets/json/ghostCookies.json',
   'https://introweb.tech/assets/json/birthdayCake.json',
-  'https://introweb.tech/assets/json/chocolateChip.json'
+  'https://introweb.tech/assets/json/chocolateChip.json',
+  'assets/recipes/curry.json',
+  'assets/recipes/pumpkin.json',
+  'assets/recipes/soup.json'
 ];
 
 // Once all of the recipes that were specified above have been fetched, their
@@ -18,6 +21,10 @@ window.addEventListener('DOMContentLoaded', init);
 
 // This is the first function to be called, so when you are tracing your code start here.
 async function init() {
+  for(let i=3;i<recipes.length;i++)
+  {
+    recipes[i] = document.URL + recipes[i];
+  }
   // fetch the recipes and wait for them to load
   let fetchSuccessful = await fetchRecipes();
   // if they didn't successfully load, quit the function
@@ -74,6 +81,15 @@ function createRecipeCards() {
   for(let i=0; i<recipes.length; i++)
   {
     let e = document.createElement("recipe-card");
+    if(i<3)
+    {
+      e.classList.add("expose_recipe");
+    }
+    else
+    {
+      e.classList.add("explore_recipe");
+      e.style["display"] = "none";
+    }
     e.data = recipeData[recipes[i]];
     recipe.append(e);
   }
@@ -89,4 +105,35 @@ function bindShowMore() {
   // in the recipeData object where you stored them/
 
   // Part 2 Explore - TODO
+  let button = document.getElementById("button-wrapper");
+  button = button.children[1];
+  button.addEventListener('click', clickShowMore);
+}
+
+function clickShowMore()
+{
+  let flag = false;
+  let explore_recipes = document.getElementsByClassName('explore_recipe');
+  for(let i=0;i<explore_recipes.length;i++)
+  {
+    if(explore_recipes[i].style['display'] == 'none')
+    {
+      explore_recipes[i].style['display'] = 'inline';
+      flag = true;
+    }
+    else
+    {
+      explore_recipes[i].style['display'] = 'none';
+    }
+  }
+  let show_button = document.getElementById('button-wrapper');
+  show_button = show_button.children[1];
+  if(flag)
+  {
+    show_button.textContent = 'Show less';
+  }
+  else
+  {
+    show_button.textContent = 'Show more';
+  }
 }
