@@ -54,6 +54,21 @@ function createRecipeCards() {
   // show any others you've added when the user clicks on the "Show more" button.
 
   // Part 1 Expose - TODO
+  var jsonrequests = [];
+    for(let i=0;i<recipes.length;i++)
+    {
+      var jsonrequest = new XMLHttpRequest();
+      jsonrequest.onreadystatechange = function() {
+        if((this.readyState == 4) && (this.status == 200))
+        {
+          recipeData[this.responseURL] = this.responseText;
+        }
+      };
+      jsonrequest.open('GET', recipes[i], true);
+      jsonrequest.send();
+      jsonrequests.push(jsonrequest);
+    }
+    resolve(true);
 }
 
 function bindShowMore() {
@@ -65,4 +80,11 @@ function bindShowMore() {
   // in the recipeData object where you stored them/
 
   // Part 2 Explore - TODO
+  let recipe = document.querySelector('main');
+  for(const rc in recipeData)
+  {
+    let e = document.createElement("recipe-card");
+    e.data = rc;
+    recipe.append(e);
+  }
 }
