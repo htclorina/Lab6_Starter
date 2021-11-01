@@ -20,7 +20,6 @@ window.addEventListener('DOMContentLoaded', init);
 async function init() {
   // fetch the recipes and wait for them to load
   let fetchSuccessful = await fetchRecipes();
-  alert("After await");
   // if they didn't successfully load, quit the function
   if (!fetchSuccessful) {
     console.log('Recipe fetch unsuccessful');
@@ -52,7 +51,7 @@ async function fetchRecipes() {
       jsonrequest.onreadystatechange = function() {
         if((this.readyState == 4) && (this.status == 200))
         {
-          recipeData[this.responseURL] = this.responseText;
+          recipeData[this.responseURL] = JSON.parse(this.responseText);
         }
       };
       jsonrequest.open('GET', recipes[i], true);
@@ -72,10 +71,10 @@ function createRecipeCards() {
 
   // Part 1 Expose - TODO
   let recipe = document.querySelector('main');
-  for(const rc in recipeData)
+  for(let i=0; i<recipes.length; i++)
   {
     let e = document.createElement("recipe-card");
-    e.data = rc;
+    e.data = recipeData[recipes[i]];
     recipe.append(e);
   }
   console.log(recipe);
