@@ -110,40 +110,90 @@ class RecipeCard extends HTMLElement {
     let span = document.createElement('span');
     let time = document.createElement('time');
     let p3 = document.createElement('p');
-    var link = document.createTextNode("Spooky Ghost Cookies");
-    img.setAttribute('src', 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/delish-190807-ghost-cookies-0031-landscape-pf-1566483952.jpg?crop=0.668xw:1.00xh;0.160xw,0&resize=100:*');
-    img.setAttribute('alt', 'Recipe Title');
+    var link = document.createTextNode(searchForKey(data, 'headline'));
+    img.setAttribute('src', searchForKey(data, 'thumbnailUrl'));
+    img.setAttribute('alt', searchForKey(data, 'headline'));
     p1.classList.add("title");
     p2.classList.add("organization");
     p3.classList.add('ingredients');
     div.classList.add('rating');
-    var t = document.createTextNode('2 hr');
-    var reviews = document.createTextNode('No Reviews');
-    span.append(reviews);
+    var t = document.createTextNode(convertTime(searchForKey(data, 'totalTime')));
+    if(searchForKey(data, 'ratingValue') != undefined)
+    {
+      var reviews = document.createTextNode(searchForKey(data, 'ratingValue'));
+      span.append(document.createTextNode(searchForKey(data, 'ratingValue')));
+      div.append(span);
+      let span2 = document.createElement('span');
+      var img2 = document.createElement("img");
+      if(reviews < 0.5)
+      {
+        img2.setAttribute('src', "/assets/images/icons/0-star.svg");
+        img2.setAttribute('alt', "0 stars");
+        div.append(img2);
+        var totalReviews = document.createTextNode( "(" + searchForKey(data, 'ratingCount') + ")");
+        span2.append(totalReviews);
+        div.append(span2);
+
+      }
+      else if(reviews >= 0.5 && reviews < 1.5)
+      {
+        img2.setAttribute('src', "/assets/images/icons/1-star.svg");
+        img2.setAttribute('alt', "1 star");
+        div.append(img2);
+        var totalReviews = document.createTextNode( "(" + searchForKey(data, 'ratingCount') + ")");
+        span2.append(totalReviews);
+        div.append(span2);
+      }
+      else if(reviews >= 1.5 && reviews < 2.5)
+      {
+        img2.setAttribute('src', "/assets/images/icons/2-star.svg");
+        img2.setAttribute('alt', "2 stars");
+        div.append(img2);
+        var totalReviews = document.createTextNode( "(" + searchForKey(data, 'ratingCount') + ")");
+        span2.append(totalReviews);
+        div.append(span2);
+      }
+      else if(reviews >= 2.5 && reviews < 3.5)
+      {
+        img2.setAttribute('src', "/assets/images/icons/3-star.svg");
+        img2.setAttribute('alt', "3 stars");
+        div.append(img2);
+        var totalReviews = document.createTextNode( "(" + searchForKey(data, 'ratingCount') + ")");
+        span2.append(totalReviews);
+        div.append(span2);
+      }
+      else if(reviews >= 3.5 && reviews < 4.5)
+      {
+        img2.setAttribute('src', "/assets/images/icons/4-star.svg");
+        img2.setAttribute('alt', "4 stars");
+        div.append(img2);
+        var totalReviews = document.createTextNode( "(" + searchForKey(data, 'ratingCount') + ")");
+        span2.append(totalReviews);
+        div.append(span2);
+      }
+      else
+      {
+        img2.setAttribute('src', "/assets/images/icons/5-star.svg");
+        img2.setAttribute('alt', "5 stars");
+        div.append(img2);
+        var totalReviews = document.createTextNode( "(" + searchForKey(data, 'ratingCount') + ")");
+        span2.append(totalReviews);
+        div.append(span2);
+      }
+    }
+    else
+    {
+      var reviews = document.createTextNode('No Reviews');
+      span.append(reviews);
+      div.append(span);
+    } 
     a.append(link);
-    //a.href = getUrl(data);
-    a.href = 'https://www.delish.com/holiday-recipes/halloween/a28637917/ghost-cookies-recipe';
+    a.href = getUrl(data);
     p1.append(a);
-    //var text = document.createTextNode(getOrganization(data));
-    var text = document.createTextNode('Delish'); 
-    var ingreds = [
-      "all-purpose flour, plus more for surface",
-      " baking powder",
-      " kosher salt",
-      " butter, softened",
-      " granulated sugar",
-      " egg",
-      " milk",
-      " pure vanilla extract&nbsp;",
-      " powdered sugar",
-      " light corn syrup",
-      " milk, plus more for thinning",
-      " almond (or vanilla)&nbsp;extract",
-      "Black food coloring"
-    ];
-    p3.append(ingreds);
+    var text = document.createTextNode(getOrganization(data));
+     
+    p3.append(createIngredientList(searchForKey(data, 'recipeIngredient')));
     p2.append(text);
-    div.append(span);
     time.append(t);
     card.append(img);
     card.append(p1);
