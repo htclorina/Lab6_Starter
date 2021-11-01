@@ -100,6 +100,59 @@ class RecipeCard extends HTMLElement {
     // created in the constructor()
 
     // Part 1 Expose - TODO
+    this.shadowRoot.append(styleElem);
+    var img = document.createElement("img");
+    let p1 = document.createElement('p');
+    let p2 = document.createElement('p');
+    let a = document.createElement('a');
+    let div = document.createElement('div');
+    let span = document.createElement('span');
+    let time = document.createElement('time');
+    let p3 = document.createElement('p');
+    var link = document.createTextNode("Spooky Ghost Cookies");
+    img.setAttribute('src', 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/delish-190807-ghost-cookies-0031-landscape-pf-1566483952.jpg?crop=0.668xw:1.00xh;0.160xw,0&resize=100:*');
+    img.setAttribute('alt', 'Recipe Title');
+    p1.classList.add("title");
+    p2.classList.add("organization");
+    p3.classList.add('ingredients');
+    div.classList.add('rating');
+    var t = document.createTextNode('2 hr');
+    var reviews = document.createTextNode('No Reviews');
+    span.append(reviews);
+    a.append(link);
+    //a.href = getUrl(data);
+    a.href = 'https://www.delish.com/holiday-recipes/halloween/a28637917/ghost-cookies-recipe';
+    p1.append(a);
+    //var text = document.createTextNode(getOrganization(data));
+    var text = document.createTextNode('Delish'); 
+    var ingreds = [
+      "all-purpose flour, plus more for surface",
+      " baking powder",
+      " kosher salt",
+      " butter, softened",
+      " granulated sugar",
+      " egg",
+      " milk",
+      " pure vanilla extract&nbsp;",
+      " powdered sugar",
+      " light corn syrup",
+      " milk, plus more for thinning",
+      " almond (or vanilla)&nbsp;extract",
+      "Black food coloring"
+    ];
+    p3.append(ingreds);
+    p2.append(text);
+    div.append(span);
+    time.append(t);
+    card.append(img);
+    card.append(p1);
+    card.append(p2);
+    card.append(div);
+    card.append(time);
+    card.append(p3);
+    console.log("hello");
+    console.log(data);
+    this.shadowRoot.append(card);
   }
 }
 
